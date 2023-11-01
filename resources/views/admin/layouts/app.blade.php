@@ -8,9 +8,11 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="{{ asset('admin-assets/plugins/fontawesome-free/css/all.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('admin-assets/plugins/dropzone/min/dropzone.min.css') }}">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="{{ asset('admin-assets/css/adminlte.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('admin-assets/css/custom.css') }}">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	<body class="hold-transition sidebar-mini">
 		<!-- Site wrapper -->
@@ -39,27 +41,27 @@
 								</a>																
 							</li>
 							<li class="nav-item">
-								<a href="categories.html" class="nav-link">
+								<a href="{{ route('unit.index')}}" class="nav-link">
 									<i class="nav-icon fas fa-file-alt"></i>
-									<p>Category</p>
+									<p>Đơn Vị</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="subcategory.html" class="nav-link">
+								<a href="{{ route('suppiler.index')}}" class="nav-link">
 									<i class="nav-icon fas fa-file-alt"></i>
-									<p>Sub Category</p>
+									<p>Nhà Cung Cấp</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="brands.html" class="nav-link">
+								<a href="{{ route('category.index')}}" class="nav-link">
 									<svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
 										<path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
 									  </svg>
-									<p>Brands</p>
+									<p>Loại Hàng</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="products.html" class="nav-link">
+								<a href="{{ route('products.index')}}" class="nav-link">
 									<i class="nav-icon fas fa-tag"></i>
 									<p>Products</p>
 								</a>
@@ -120,8 +122,18 @@
 		<script src="{{ asset('admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 		<!-- AdminLTE App -->
 		<script src="{{ asset('admin-assets/js/adminlte.min.js') }}"></script>
+		<script src="{{ asset('admin-assets/plugins/dropzone/min/dropzone.min.js') }}"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script src="{{ asset('admin-assets/js/demo.js') }}"></script>
+		<script type="text/javascript" >
+		$.ajaxSetup({
+			headers:{
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+			}
+		});
+
+		</script>
         @yield('customJs')
 	</body>
 </html>
