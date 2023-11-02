@@ -27,6 +27,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-3">
+                                    <label for="product_quantity">Số Lượng Sản Phẩm</label>
+                                    <input type="number" min="0" name="product_quantity" id="product_quantity" class="form-control" placeholder="Số lượng sản phẩm">	
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
                                     <label for="product_name">Tên Sản Phẩm</label>
                                     <input type="text" name="product_name" id="product_name" class="form-control" placeholder="product_name">	
                                     <p></p>

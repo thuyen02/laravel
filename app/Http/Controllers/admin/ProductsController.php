@@ -40,6 +40,7 @@ class ProductsController extends Controller
     ]);
         if($validatior->passes()){
             $Products = new products();
+            $Products->product_quantity = $request->product_quantity;
             $Products->product_code = $request->product_code;
             $Products->product_name = $request->product_name;        
             $Products->category_id = $request->category;

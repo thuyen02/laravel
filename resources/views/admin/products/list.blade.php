@@ -45,13 +45,14 @@
                         <tr>
                             <th width="60">ID</th>
                             <th width="80"></th>
-                            <th>Product</th>
-                            <th>Product_code</th>
-                            <th>category_id</th>
-                            <th>unit_id</th>
-                            <th>price</th>
-                            <th>price_retail</th>
-                            <th>price_wholesale</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng Sản Phẩm</th>
+                            <th>Mã Sản Phẩm</th>
+                            <th>ID Mã Hàng</th>
+                            <th>ID Mã Đơn Vị</th>
+                            <th>Giá</th>
+                            <th>Giá Nhập</th>
+                            <th>Giá Bán lẻ</th>
                             <th width="100">Status</th>
                             <th width="100">Action</th>
                         </tr>
@@ -72,6 +73,7 @@
                                 @endif
                             </td>
                             <td><a href="#">{{ $S->product_name }}</a></td>
+                            <td>{{ $S->product_quantity }}</td>
                             <td>{{ $S->product_code }}</td>
                             <td>{{ $S->category_id }}</td>
                             <td>{{ $S->unit_id }}</td>

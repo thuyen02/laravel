@@ -59,7 +59,6 @@ class CategoryController extends Controller
                      $img->resize(450,600);
                      $img->save($dPath);
 
-
                     $Category->image = $newImageName;
                     $Category->save();
                 }

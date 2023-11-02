@@ -95,6 +95,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/Products', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/Products/create', [ProductsController::class, 'create'])->name('products.create');
     Route::post('/Products', [ProductsController::class, 'store'])->name('products.store');
+    Route::get('/Products/{Product}/edit', [ProductsController::class, 'edit'])->name('Products.edit');
+
     Route::get('/products', function (Request $request) {
         $Product_code ="";
         if (!empty($request->title)) {
