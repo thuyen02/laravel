@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\admin\SuppilerController;
 use App\Http\Controllers\admin\TempImagesController;
@@ -95,8 +96,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/Products', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/Products/create', [ProductsController::class, 'create'])->name('products.create');
     Route::post('/Products', [ProductsController::class, 'store'])->name('products.store');
-    Route::get('/Products/{Product}/edit', [ProductsController::class, 'edit'])->name('Products.edit');
-
+    Route::get('/Products/{Product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
+    Route::put('/Products/{Product}', [ProductsController::class, 'update'])->name('products.update');
+    Route::delete('/Products/{Product}', [ProductsController::class, 'destroy'])->name('products.delete');
+    
+    Route::post('/Products-image/update', [ProductImageController::class, 'update'])->name('product-images.update');
+    Route::delete('/Products-image', [ProductImageController::class, 'destroy'])->name('product-images.destroy');
+    
+    
     Route::get('/products', function (Request $request) {
         $Product_code ="";
         if (!empty($request->title)) {

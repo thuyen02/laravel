@@ -11,6 +11,7 @@ use App\Models\unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\File;
 class ProductsController extends Controller
 {
     public function index(Request $request){
@@ -97,4 +98,87 @@ class ProductsController extends Controller
         }
   
 }
-}
+    public function edit($id,Request $request){
+        $Products = products::find($id);
+        $ProductsImage = productsImage::where('products_id',$Products->id)->get();
+        if(empty( $Products)){
+            $request->session()->flash('error','products not found');
+            return redirect()->route(' products.index');
+        }
+        $data=[];
+        $data['Product'] = $Products;
+        $data['ProductsImage'] =  $ProductsImage;
+        $Unit = unit::orderBy('name','ASC')->get();
+        $data['Unit'] = $Unit;
+        $Category = category::orderBy('category_name','ASC')->get();
+        $data['Category'] = $Category;
+        return view('admin.products.edit',$data);
+    }
+    public function update($id,Request $request){
+        $Products = products::find($id);
+        if(empty($Products)){
+            $request->session()->flash('error','product not found');
+            return response()->json([
+                'status' => false,
+                'notfound'=>true,
+                'message' => 'product not found'
+            ]);
+        }
+        $validatior= Validator::make($request->all(),[
+            'product_name'=>'required',
+            'price'=>'required',
+            'unit'=>'required',
+            'category'=>'required',
+            'product_code'=>'required|unique:Products,product_code,'.$Products->id.',id',
+        ]);
+            if($validatior->passes()){
+            $Products->product_quantity = $request->product_quantity;
+            $Products->product_code = $request->product_code;
+            $Products->product_name = $request->product_name;        
+            $Products->category_id = $request->category;
+            $Products->status = $request->status;
+            $Products->unit_id = $request->unit;
+            $Products->price = $request->price;        
+            $Products->price_retail = $request->price_retail;
+            $Products->price_wholesale = $request->price_wholesale;
+            $Products->save(); 
+            
+                $request->session()-> flash('success','product updated successfully');
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'product updated successfully'
+                ]);
+            }else{
+                return response()->json([
+                    'status' =>true,
+                    'errors' =>$validatior->errors()
+                ]);
+            }
+      
+    }
+    public function destroy($id,Request $request){
+        $Product = products::find($id);
+        if(empty($Product)){
+            $request->session()-> flash('error','product not found');
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'product not found'
+                ]);
+            }
+                $productsImages = productsImage::where('products_id',$id)->get();
+                if(!empty($productsImages)){
+                    foreach($productsImages as $productsImage){
+                        File::delete(public_path('uploads/product/large/'.$productsImage->image));
+                        File::delete(public_path('uploads/product/small/'.$productsImage->image));
+                    }
+                    $productsImage::where('products_id',$id)->delete();
+                }
+                $Product->delete();
+                $request->session()-> flash('success','product deleted successfully');
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'product deleted successfully'
+                ]);
+        }
+    }
+
