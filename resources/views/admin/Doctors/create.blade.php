@@ -5,10 +5,10 @@
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thêm Mới Nhà Cung Cấp</h1>
+                <h1>Insert Doctors</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="{{ route('suppiler.index') }}" class="btn btn-primary">Back</a>
+                <a href="{{ route('doctors.index') }}" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>
@@ -18,36 +18,36 @@
 <section class="content">
     <!-- Default box -->
     <div class="container-fluid">   
-        <form action="" method="post" name="suppilerForm" id="suppilerForm">
+        <form action="" method="post" name="doctorsForm" id="doctorsForm">
             <div class="card">
                 <div class="card-body">								
                     <div class="row">
                     
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="suppiler_code">Mã nhà cung cấp</label>
-                                <input type="text"  name="suppiler_code" id="suppiler_code" class="form-control" placeholder="suppiler_code">	
+                                <label for="doctors_code">Mã Bác Sỹ</label>
+                                <input type="text"  name="doctors_code" id="doctors_code" class="form-control" placeholder="doctors_code">	
                                 <p></p>
                             </div>
                         </div>	
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="suppiler_name">Tên cung cấp </label>
-                                <input type="text" name="suppiler_name" id="suppiler_name" class="form-control" placeholder="suppiler_name">	
+                                <label for="doctors_name">Tên của bác sĩ </label>
+                                <input type="text" name="doctors_name" id="doctors_name" class="form-control" placeholder="doctors_name">	
                                 <p></p>
                             </div>
                         </div>	
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="phone_number">số điện thoại</label>
-                                <input type="text" name="phone_number" id="phone_number" class="form-control" placeholder="phone_number">	
+                                <label for="specialization">Chuyên ngành của bác sĩ</label>
+                                <input type="text" name="specialization" id="specialization" class="form-control" placeholder="specialization">	
                                 <p></p>
                             </div>
                         </div>		
                   				  <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="email">Email</label>
-                                <input type="email"  name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email">
+                                <label for="department">Bộ phận hoặc khoa chuyên môn của bác sĩ</label>
+                                <input type="text" name="department" id="department" class="form-control" placeholder="department">	
                                 <p></p>
                             </div>
                         </div>		
@@ -75,44 +75,44 @@
 @endsection
 @section('customJs')
 <script>
-$("#suppilerForm").submit(function(event){
+$("#doctorsForm").submit(function(event){
     event.preventDefault();
     var element = $(this);
     // $("button[type=submit]").prop('disabled',true);
     $.ajax({
-        url:'{{ route("suppiler.store") }}',
+        url:'{{ route("doctors.store") }}',
         type:'post',
         data: element.serializeArray(),
         dataType:'json',
         success: function(response){
         // $("button[type=submit]").prop('disabled',false);
             if(response["status"]==true){
-                window.location.href="{{ route('suppiler.index') }}";
-                $("#suppiler_name").removeClass('is-invalid')
+                window.location.href="{{ route('doctors.index') }}";
+                $("#doctors_name").removeClass('is-invalid')
                .siblings('p')
                .removeClass('invalid-feedback').html("");
 
-               $("#suppiler_code").removeClass('is-invalid')
+               $("#doctors_code").removeClass('is-invalid')
                .siblings('p')
                .removeClass('invalid-feedback').html("");
             }else{
                 var errors =response['errors']
-            if(errors['suppiler_name']){
-               $("#suppiler_name").addClass('is-invalid')
+            if(errors['doctors_name']){
+               $("#doctors_name").addClass('is-invalid')
                .siblings('p')
-               .addClass('invalid-feedback').html(errors['suppiler_name']);
+               .addClass('invalid-feedback').html(errors['doctors_name']);
             }else{
-                $("#suppiler_name").removeClass('is-invalid')
+                $("#doctors_name").removeClass('is-invalid')
                .siblings('p')
                .removeClass('invalid-feedback').html("");
             }
        
-            if(errors['suppiler_code']){
-               $("#suppiler_code").addClass('is-invalid')
+            if(errors['doctors_code']){
+               $("#doctors_code").addClass('is-invalid')
                .siblings('p')
-               .addClass('invalid-feedback').html(errors['suppiler_code']);
+               .addClass('invalid-feedback').html(errors['doctors_code']);
             }else{
-                $("#suppiler_code").removeClass('is-invalid')
+                $("#doctors_code").removeClass('is-invalid')
                .siblings('p')
                .removeClass('invalid-feedback').html("");
             }
@@ -124,19 +124,19 @@ $("#suppilerForm").submit(function(event){
     })
 });
 
-$("#suppiler_name").change(function(){
+$("#doctors_name").change(function(){
     element =$(this);
     // $("button[type=submit]").prop('disabled',true);
 
     $.ajax({
-    url:'{{ route("Get.suppiler_code") }}',
+    url:'{{ route("Get.doctors_code") }}',
     type:'get',
     data: {title: element.val()},
     dataType:'json',
     success: function(response){
     // $("button[type=submit]").prop('disabled',false);
         if(response["status"]==true){
-            $["$suppiler_code"].val(response["suppiler_code"]);
+            $["$doctors_code"].val(response["doctors_code"]);
             }
         }
     });

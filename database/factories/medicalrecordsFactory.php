@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\unit>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class unitFactory extends Factory
+class medicalrecordsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class unitFactory extends Factory
     public function definition(): array
     {
         return [
-            'unit_code'=>fake()->currencyCode(),
-            'name'=>fake()->name(),
-            'status'=>rand(0,1)       
+            //
         ];
     }
 }

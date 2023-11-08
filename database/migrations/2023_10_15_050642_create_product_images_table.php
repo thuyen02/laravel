@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_images', function (Blueprint $table) {
+        Schema::create('labresults_images', function (Blueprint $table) {
           
             $table->id();
-            $table->foreignId('products_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('labresults_id')->constrained('labresults')->onDelete('cascade');
             $table->string('image');
             $table->integer('sort_order')->nullable();
             $table->timestamps();
-
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('labresults_images');
     }
 };

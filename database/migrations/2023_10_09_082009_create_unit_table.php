@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unit', function (Blueprint $table) {
+        Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->string('unit_code');
-            $table->string('name');
+            $table->string('doctors_code');
+            $table->string('doctors_name');
+            $table->string('specialization');
+            $table->string('department');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unit');
+        Schema::dropIfExists('doctors');
     }
 };

@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class products extends Model
+class patients extends Model
 {
     use HasFactory;
-
-    public function product_images(){
-        return $this->hasMany(productsImage::class);
-    }
+    protected  $table='patients';
 }
