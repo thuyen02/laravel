@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\DeliveryController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductsController;
+use App\Http\Controllers\admin\ReceivedController;
 use App\Http\Controllers\admin\SuppilerController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\UnitController;
