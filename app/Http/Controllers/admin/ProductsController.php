@@ -114,6 +114,22 @@ class ProductsController extends Controller
         $data['Category'] = $Category;
         return view('admin.products.edit',$data);
     }
+    public function detail($id,Request $request){
+        $Products = products::find($id);
+        $ProductsImage = productsImage::where('products_id',$Products->id)->get();
+        if(empty( $Products)){
+            $request->session()->flash('error','products not found');
+            return redirect()->route(' products.index');
+        }
+        $data=[];
+        $data['Product'] = $Products;
+        $data['ProductsImage'] =  $ProductsImage;
+        $Unit = unit::orderBy('name','ASC')->get();
+        $data['Unit'] = $Unit;
+        $Category = category::orderBy('category_name','ASC')->get();
+        $data['Category'] = $Category;
+        return view('admin.products.detail',$data);
+    }
     public function update($id,Request $request){
         $Products = products::find($id);
         if(empty($Products)){
@@ -180,5 +196,6 @@ class ProductsController extends Controller
                     'message'=>'product deleted successfully'
                 ]);
         }
+      
     }
 

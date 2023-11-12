@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\admin\SettingController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
@@ -8,6 +9,8 @@ use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\admin\SuppilerController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\UnitController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController as ControllersHomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,11 +25,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
+Route::group(['prefix' => 'account'], function () {
+  
+    Route::group(['middleware' => 'guest'], function () {
+        
+        Route::get('/login', [AuthController::class,'login'])->name('account.login');
+        Route::post('/login', [AuthController::class, 'authenticate'])->name('account.authenticate');
+        Route::post('/process-register', [AuthController::class,'processRegister'])->name('account.processregister');
+        Route::get('/register', [AuthController::class,'register'])->name('account.register');
+     
+    });
+    Route::group(['middleware' => 'auth'], function () {
+     
 
+        Route::get('/logout', [AuthController::class,'logout'])->name('account.logout');
+        //home
+        Route::get('/home', [ControllersHomeController::class,'index'])->name('dashboard.index');
+        Route::get('/product', [ControllersHomeController::class,'product'])->name('product.index');
+        Route::get('/suppiler', [ControllersHomeController::class,'suppiler'])->name('suppilers.index');
+        Route::get('/unit', [ControllersHomeController::class,'unit'])->name('unitts.index');
+        Route::get('/category', [ControllersHomeController::class,'category'])->name('categorys.index');
+        Route::post('/update-profile', [AuthController::class,'update'])->name('update_user.index');
+        Route::get('/update-profile', [AuthController::class,'update_user'])->name('update_users.index');
+    });   
+});
+
+
+Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');    
 Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['middleware' => 'admin.guest'], function () {
@@ -97,6 +122,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/Products/create', [ProductsController::class, 'create'])->name('products.create');
     Route::post('/Products', [ProductsController::class, 'store'])->name('products.store');
     Route::get('/Products/{Product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
+    Route::get('/Products/{Product}/detail', [ProductsController::class, 'detail'])->name('products.detail');
     Route::put('/Products/{Product}', [ProductsController::class, 'update'])->name('products.update');
     Route::delete('/Products/{Product}', [ProductsController::class, 'destroy'])->name('products.delete');
     
@@ -116,5 +142,6 @@ Route::group(['prefix' => 'admin'], function () {
     })->name('Get.product_code');
 
     Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
-
+    Route::get('/change-password',[SettingController::class,'showChangePasswordForm'])->name('admin.showChangePasswordForm');
+    Route::post('/process-change-password',[SettingController::class,'proccessChangePassword'])->name('admin.proccessChangePassword');
 });
